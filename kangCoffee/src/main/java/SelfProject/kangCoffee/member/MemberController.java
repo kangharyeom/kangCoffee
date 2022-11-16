@@ -10,14 +10,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/v1/members", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping("/v1/members")
 public class MemberController {
     @PostMapping
-    public ResponseEntity postMember(@RequestParam("email") String email,
+    public ResponseEntity postMember(@RequestParam("memberId") Long memberId,
+                                     @RequestParam("email") String email,
                                      @RequestParam("name") String name,
                                      @RequestParam("phone") String phone) {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberId", memberId);
         map.put("email", email);
         map.put("name", name);
         map.put("phone", phone);
