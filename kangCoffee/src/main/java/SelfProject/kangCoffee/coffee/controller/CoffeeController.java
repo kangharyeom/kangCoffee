@@ -2,6 +2,8 @@ package SelfProject.kangCoffee.coffee.controller;
 
 import SelfProject.kangCoffee.coffee.DTO.CoffeePatchDTO;
 import SelfProject.kangCoffee.coffee.DTO.CoffeePostDTO;
+import SelfProject.kangCoffee.member.mapper.MemberMapper;
+import SelfProject.kangCoffee.member.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +16,7 @@ import javax.validation.constraints.Min;
 @RequestMapping("/v1/coffees")
 @Validated
 public class CoffeeController {
+
     @PostMapping
     public ResponseEntity postCoffee(@Valid @RequestBody CoffeePostDTO coffeePostDTO){
         return new ResponseEntity<>(coffeePostDTO, HttpStatus.CREATED);

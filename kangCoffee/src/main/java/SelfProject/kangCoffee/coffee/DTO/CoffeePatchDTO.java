@@ -6,7 +6,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class CoffeePatchDTO {
-    @NotEmpty
     @Min(1)
     private long coffeeId;
     @NotEmpty
@@ -17,7 +16,6 @@ public class CoffeePatchDTO {
     @Pattern(regexp = "^[a-zA-Z]*$")
     private String engName;
 
-    @NotEmpty
     @Min(100)
     @Max(50000)
     private long price;
