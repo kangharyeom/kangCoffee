@@ -1,5 +1,7 @@
 package SelfProject.kangCoffee.member.service;
 
+import SelfProject.kangCoffee.exception.BusinessLogicException;
+import SelfProject.kangCoffee.exception.ExceptionCode;
 import SelfProject.kangCoffee.member.entity.Member;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ public class MemberService {
         Member member =
                 new Member(memberId, "ghd@gmail.com", "홍길동", "010-1234-5678");
         return member;
+//        throw new RuntimeException("Not found member");
+//        throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
     }
 
     //멤버 다수를 조회해야하므로 List로 가져옴

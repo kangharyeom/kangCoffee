@@ -95,8 +95,8 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
-
-    @ExceptionHandler
+    // ExceptionAdvice를 사용하기 위한 ExceptionHandler 주석처리
+    /*@ExceptionHandler
     public ResponseEntity handleException(MethodArgumentNotValidException e){
         // MethodArgumentNotValidException 객체에서 getBindingResult().getFieldErrors()를 통해 발생한 에러 정보를 확인할 수 있다.
         final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
@@ -112,5 +112,5 @@ public class MemberController {
         return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.BAD_REQUEST);
         // ResponseEntity를 통해 Response Body로 전달
 //        return new ResponseEntity(fieldErrors, HttpStatus.BAD_REQUEST);
-    }
+    }*/
 }
