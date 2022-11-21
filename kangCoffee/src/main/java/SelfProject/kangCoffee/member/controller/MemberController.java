@@ -7,9 +7,12 @@ import SelfProject.kangCoffee.member.Dto.MemberResponseDto;
 import SelfProject.kangCoffee.member.entity.Member;
 import SelfProject.kangCoffee.member.mapstruct.MemberMapper;
 import SelfProject.kangCoffee.member.service.MemberService;
+import SelfProject.kangCoffee.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -90,5 +93,24 @@ public class MemberController {
         memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    @ExceptionHandler
+    public ResponseEntity handleException(MethodArgumentNotValidException e){
+        // MethodArgumentNotValidException 객체에서 getBindingResult().getFieldErrors()를 통해 발생한 에러 정보를 확인할 수 있다.
+        final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+
+        List<ErrorResponse.FieldError> errors =
+                fieldErrors.stream()
+                        .map(error -> new ErrorResponse.FieldError(
+                                error.getField(),
+                                error.getRejectedValue(),
+                                error.getDefaultMessage()))
+                        .collect(Collectors.toList());
+
+        return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.BAD_REQUEST);
+        // ResponseEntity를 통해 Response Body로 전달
+//        return new ResponseEntity(fieldErrors, HttpStatus.BAD_REQUEST);
     }
 }
