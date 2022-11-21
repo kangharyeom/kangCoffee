@@ -1,27 +1,30 @@
 package SelfProject.kangCoffee.coffee.DTO;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
-public class CoffeePostDTO {
+public class CoffeePatchDto {
     @Min(1)
     private long coffeeId;
-    @NotBlank
+    @NotEmpty
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣]*$")
     private String korName;
-    @NotBlank
+
+    @NotEmpty
     @Pattern(regexp = "^[a-zA-Z]*$")
     private String engName;
 
-    @Min(100L)
-    @Max(50000L)
+    @Min(100)
+    @Max(50000)
     private long price;
 
-
-    public Long getCoffeeId() {
+    public long getCoffeeId() {
         return coffeeId;
     }
 
-    public void setCoffeeId(Long coffeeId) {
+    public void setCoffeeId(long coffeeId) {
         this.coffeeId = coffeeId;
     }
 
@@ -41,11 +44,11 @@ public class CoffeePostDTO {
         this.engName = engName;
     }
 
-    public long getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 }

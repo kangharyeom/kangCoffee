@@ -1,8 +1,8 @@
-package SelfProject.kangCoffee.member.DTO;
+package SelfProject.kangCoffee.member.Dto;
 
 import javax.validation.constraints.Pattern;
 
-public class MemberPatchDTO {
+public class MemberPatchDto {
     private long memberId;
     @Pattern(regexp = "^\\S+(\\s?\\S+)*$", message = "회원 이름은 공백이 아니어야 합니다.")
     private String name;
