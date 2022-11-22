@@ -1,5 +1,6 @@
 package SelfProject.kangCoffee.order;
 
+import SelfProject.kangCoffee.order.entity.Order;
 import SelfProject.kangCoffee.order.mapper.OrderMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

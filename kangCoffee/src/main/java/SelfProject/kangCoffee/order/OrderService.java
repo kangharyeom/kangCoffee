@@ -1,5 +1,6 @@
 package SelfProject.kangCoffee.order;
 
+import SelfProject.kangCoffee.order.entity.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
