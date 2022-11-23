@@ -5,14 +5,12 @@ import SelfProject.kangCoffee.member.Dto.MemberPatchDto;
 import SelfProject.kangCoffee.member.Dto.MemberPostDto;
 import SelfProject.kangCoffee.member.Dto.MemberResponseDto;
 import SelfProject.kangCoffee.member.entity.Member;
-import SelfProject.kangCoffee.member.mapstruct.MemberMapper;
+import SelfProject.kangCoffee.member.mapper.MemberMapper;
 import SelfProject.kangCoffee.member.service.MemberService;
-import SelfProject.kangCoffee.response.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/v1/members")
 @Validated
+@Slf4j
 public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;

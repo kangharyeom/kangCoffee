@@ -1,39 +1,101 @@
 package SelfProject.kangCoffee.coffee.service;
 
+import SelfProject.kangCoffee.coffee.CoffeeRepository;
 import SelfProject.kangCoffee.coffee.entity.Coffee;
+import SelfProject.kangCoffee.exception.BusinessLogicException;
+import SelfProject.kangCoffee.exception.ExceptionCode;
+import SelfProject.kangCoffee.order.entity.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CoffeeService {
-    public Coffee createCoffee(Coffee coffee){
-        Coffee createCoffee = coffee;
-        return createCoffee;
-    }
-    public  Coffee updateCoffee(Coffee coffee){
-        Coffee updateCoffee = coffee;
-        return updateCoffee;
-    }
-    public  Coffee findCoffee(long coffeeId){
-        Coffee coffee =
-                new Coffee(coffeeId, "아메리카노", "Americano", 1000);
-        return coffee;
+    private CoffeeRepository coffeeRepository;
+
+    public CoffeeService(CoffeeRepository coffeeRepository) {
+        this.coffeeRepository = coffeeRepository;
     }
 
-    //멤버 다수를 조회해야하므로 List로 가져옴
-    public List<Coffee> findCoffees(){
-        List<Coffee> coffees = List.of(
-                new Coffee(1L, "아메리카노", "Americano", 1000),
-                new Coffee(2L, "카페라떼", "Cafelatte", 2000)
-        );
-        return coffees;
+    public Coffee createCoffee(Coffee coffee) {
+        // 커피 코드를 대문자로 변경
+        String coffeeCode = coffee.getCoffeeCode().toUpperCase();
+
+        // 이미 등록된 커피 코드인지 확인
+        verifyExistCoffee(coffeeCode);
+        coffee.setCoffeeCode(coffeeCode);
+
+        return coffeeRepository.save(coffee);
     }
 
-    //회원 삭제
-    public  void deleteCoffee(long coffeeId){
+    public Coffee updateCoffee(Coffee coffee) {
+        // 조회하려는 커피가 검증된 커피인지 확인(존재하는 커피인지 확인 등)
+        Coffee findCoffee = findVerifiedCoffee(coffee.getCoffeeId());
 
+        // TODO 리팩토링 포인트
+        Optional.ofNullable(coffee.getKorName())
+                .ifPresent(korName -> findCoffee.setKorName(korName));
+        Optional.ofNullable(coffee.getEngName())
+                .ifPresent(engName -> findCoffee.setEngName(engName));
+        Optional.ofNullable(coffee.getPrice())
+                .ifPresent(price -> findCoffee.setPrice(price));
+
+        return coffeeRepository.save(findCoffee);
     }
 
+    public Coffee findCoffee(long coffeeId) {
+        return findVerifiedCoffeeByQuery(coffeeId);
+    }
+
+    // 주문에 해당하는 커피 정보 조회
+    public List<Coffee> findOrderedCoffees(Order order) {
+        return order.getOrderCoffees()
+                .stream()
+                .map(coffeeRef -> findCoffee(coffeeRef.getCoffeeId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Coffee> findCoffees() {
+        return (List<Coffee>) coffeeRepository.findAll();
+    }
+
+    /**
+     * 주문한 커피 정보를 한 번에 조회한다.
+     * @param coffeeIds
+     * @return
+     */
+    public List<Coffee> findAllCoffeesByIds(List<Long> coffeeIds) {
+        return (List<Coffee>) coffeeRepository.findAllById(coffeeIds);
+    }
+
+    public void deleteCoffee(long coffeeId) {
+        Coffee coffee = findVerifiedCoffee(coffeeId);
+        coffeeRepository.delete(coffee);
+    }
+
+    public Coffee findVerifiedCoffee(long coffeeId) {
+        Optional<Coffee> optionalCoffee = coffeeRepository.findById(coffeeId);
+        Coffee findCoffee =
+                optionalCoffee.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.COFFEE_NOT_FOUND));
+
+        return findCoffee;
+    }
+
+    private void verifyExistCoffee(String coffeeCode) {
+        Optional<Coffee> coffee = coffeeRepository.findByCoffeeCode(coffeeCode);
+        if(coffee.isPresent())
+            throw new BusinessLogicException(ExceptionCode.COFFEE_CODE_EXISTS);
+    }
+
+    private Coffee findVerifiedCoffeeByQuery(long coffeeId) {
+        Optional<Coffee> optionalCoffee = coffeeRepository.findByCoffee(coffeeId);
+        Coffee findCoffee =
+                optionalCoffee.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.COFFEE_NOT_FOUND));
+
+        return findCoffee;
+    }
 }
-

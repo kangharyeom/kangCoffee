@@ -8,9 +8,10 @@ import org.springframework.data.annotation.Id;
 public class Coffee {
     @Id
     private long coffeeId;
+
     private String korName;
     private String engName;
-    private long price;
+    private int price;
+    //    private Money price;
     private String coffeeCode;
-
 }

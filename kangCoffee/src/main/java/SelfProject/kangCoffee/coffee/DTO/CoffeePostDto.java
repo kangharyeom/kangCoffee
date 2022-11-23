@@ -1,51 +1,24 @@
 package SelfProject.kangCoffee.coffee.DTO;
 
-import javax.validation.constraints.*;
+import lombok.Getter;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.*;
+@Getter
 public class CoffeePostDto {
-    @Min(1)
-    private long coffeeId;
     @NotBlank
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣]*$")
     private String korName;
+
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Z]*$")
+    @Pattern(regexp = "^([A-Za-z])(\\s?[A-Za-z])*$",
+            message = "커피명(영문)은 영문이어야 합니다(단어 사이 공백 한 칸 포함). 예) Cafe Latte")
     private String engName;
 
-    @Min(100L)
-    @Max(50000L)
-    private long price;
+    @Range(min= 100, max= 50000)
+    private int price;
 
-
-    public Long getCoffeeId() {
-        return coffeeId;
-    }
-
-    public void setCoffeeId(Long coffeeId) {
-        this.coffeeId = coffeeId;
-    }
-
-    public String getKorName() {
-        return korName;
-    }
-
-    public void setKorName(String korName) {
-        this.korName = korName;
-    }
-
-    public String getEngName() {
-        return engName;
-    }
-
-    public void setEngName(String engName) {
-        this.engName = engName;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
+    @NotBlank
+    @Pattern(regexp = "^([A-Za-z]){3}$",
+            message = "커피 코드는 3자리 영문이어야 합니다.")
+    private String coffeeCode;
 }

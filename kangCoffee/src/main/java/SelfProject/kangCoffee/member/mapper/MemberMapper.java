@@ -4,28 +4,15 @@ import SelfProject.kangCoffee.member.Dto.MemberPatchDto;
 import SelfProject.kangCoffee.member.Dto.MemberPostDto;
 import SelfProject.kangCoffee.member.Dto.MemberResponseDto;
 import SelfProject.kangCoffee.member.entity.Member;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
-@Component
-public class MemberMapper {
-    public Member memberPostDtoToMember(MemberPostDto memberPostDto) {
-        return new Member(0L,
-                memberPostDto.getEmail(),
-                memberPostDto.getName(),
-                memberPostDto.getPhone());
-    }
+import java.util.List;
 
-    public Member memberPatchDtoToMember(MemberPatchDto memberPatchDto) {
-        return new Member(memberPatchDto.getMemberId(),
-                null,
-                memberPatchDto.getName(),
-                memberPatchDto.getPhone());
-    }
-
-    public MemberResponseDto memberToMemberResponseDto(Member member) {
-        return new MemberResponseDto(member.getMemberId(),
-                member.getEmail(),
-                member.getName(),
-                member.getPhone());
-    }
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface MemberMapper {
+    Member memberPostDtoToMember(MemberPostDto memberPostDto);
+    Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
+    MemberResponseDto memberToMemberResponseDto(Member member);
+    List<MemberResponseDto> membersToMemberResponseDtos(List<Member> members);
 }
