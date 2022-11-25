@@ -1,15 +1,24 @@
 package SelfProject.kangCoffee.member.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@Entity
 public class Member {
     @Id
+    @GeneratedValue
     private long memberId;
     private String email;
-    private String name;
-    private String phone;
+
+    public Member(String email) {
+        this.email = email;
+    }
 }
