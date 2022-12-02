@@ -1,30 +1,39 @@
 package SelfProject.kangCoffee.order.entity;
 
 import SelfProject.kangCoffee.member.entity.Member;
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
+@NoArgsConstructor
 @Getter
 @Setter
-@Table("ORDERS")
+@Entity(name="ORDERS")
 public class Order {
     @Id
-    private long orderId;
-    private AggregateReference<Member, Long> memberId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long OrderId;
 
-    @MappedCollection(idColumn = "ORDER_ID", keyColumn = "ORDER_COFFEE_ID")
-    private Set<CoffeeRef> orderCoffees = new LinkedHashSet<>();
-
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
 
+    @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(nullable = false, name = "LAST_MODIFIED_AT")
+    private LocalDateTime modifiedAt = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    public void addMember(Member member){
+        this.member = member;
+    }
+
 
     public enum OrderStatus {
         ORDER_REQUEST(1, "주문 요청"),
@@ -36,11 +45,11 @@ public class Order {
         @Getter
         private int stepNumber;
         @Getter
-        private String stepDescription;
+        private String stepdescription;
 
-        OrderStatus(int stepNumber, String stepDescription){
+        OrderStatus(int stepNumber, String stepdescription) {
             this.stepNumber = stepNumber;
-            this.stepDescription = stepDescription;
+            this.stepdescription = stepdescription;
         }
     }
 }
