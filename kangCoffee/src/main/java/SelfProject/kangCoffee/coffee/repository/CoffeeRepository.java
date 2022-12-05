@@ -1,4 +1,4 @@
-package SelfProject.kangCoffee.member.repository;
+package SelfProject.kangCoffee.coffee.repository;
 
 import SelfProject.kangCoffee.coffee.entity.Coffee;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +11,6 @@ public interface CoffeeRepository extends JpaRepository<Coffee, Long> {
 
     @Query(value = "SELECT c FROM Coffee c WHERE c.coffeeId = :coffeeId")
     Optional<Coffee> findById(Long aLong);
+
+    Optional<Coffee> findByCoffee(long coffeeId);
 }

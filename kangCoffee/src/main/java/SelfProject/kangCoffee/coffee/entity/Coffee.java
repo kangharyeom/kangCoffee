@@ -6,20 +6,22 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@NoArgsConstructor
 public class Coffee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long CoffeeId;
+    private Long coffeeId;
 
-    @Column(nullable = false, updatable = true, unique = true)
+    @Column(length = 100, nullable = false)
     private String korName;
 
-    @Column(nullable = false, updatable = true, unique = true)
+    @Column(length = 100, nullable = false)
     private String engName;
 
     @Column(length = 5, nullable = false)
@@ -28,7 +30,7 @@ public class Coffee {
     @Column(length = 3, nullable = false, unique = true)
     private String coffeeCode;
 
-    // (1) 추가된 부분
+    // 커피 상태 추가
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private CoffeeStatus coffeeStatus = CoffeeStatus.COFFEE_FOR_SALE;
@@ -39,6 +41,21 @@ public class Coffee {
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
+    @OneToMany (mappedBy = "coffee")
+    private List<OrderCoffee> orderCoffees = new ArrayList<>();
+
+    public void addOrderCoffee(OrderCoffee orderedCoffee) {
+        orderCoffees.add(orderedCoffee);
+    }
+
+    public Coffee(String korName, String engName, int price, String coffeeCode) {
+        this.korName = korName;
+        this.engName = engName;
+        this.price = price;
+        this.coffeeCode = coffeeCode;
+    }
+
+    // 커피 상태 추가
     public enum CoffeeStatus {
         COFFEE_FOR_SALE("판매중"),
         COFFEE_SOLD_OUT("판매중지");

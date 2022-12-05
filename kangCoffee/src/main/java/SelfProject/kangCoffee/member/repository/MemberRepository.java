@@ -1,4 +1,4 @@
-package SelfProject.kangCoffee.coffee.repository;
+package SelfProject.kangCoffee.member.repository;
 
 import SelfProject.kangCoffee.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

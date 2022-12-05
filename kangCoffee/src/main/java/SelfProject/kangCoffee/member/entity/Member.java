@@ -58,8 +58,8 @@ public class Member {
 
     private enum MemberStatus{
         MEMBER_ACTIVE("활동중"),
-        MEMBER_SLEEP("활동중"),
-        MEMBER_QUIT("활동중");
+        MEMBER_SLEEP("휴면 상태"),
+        MEMBER_QUIT("탈퇴 상태");
 
 
         @Getter
