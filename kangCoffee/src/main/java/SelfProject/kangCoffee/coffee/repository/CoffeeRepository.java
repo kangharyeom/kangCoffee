@@ -10,7 +10,5 @@ public interface CoffeeRepository extends JpaRepository<Coffee, Long> {
     Optional<Coffee> findByCoffeeCode(String CoffeeCode);
 
     @Query(value = "SELECT c FROM Coffee c WHERE c.coffeeId = :coffeeId")
-    Optional<Coffee> findById(Long aLong);
-
     Optional<Coffee> findByCoffee(long coffeeId);
 }

@@ -21,7 +21,8 @@ public class CoffeeService {
 
     public Coffee createCoffee(Coffee coffee){
         // 커피코드를 받아와서 대문자로 변경
-        String coffeeCode = Coffee.getCoffeeCode().toUpperCase();
+        String coffeeCode = coffee.getCoffeeCode().toUpperCase();
+        //Di를 받을 때 대소문자 구분해서 코딩하기.
 
         // 등록된 커피코드인지 확인
         verifyExistCoffee(coffeeCode);
@@ -35,7 +36,7 @@ public class CoffeeService {
     // 엔티티를 변경하는 역할
     public Coffee updateCoffee(Coffee coffee){
         // 커피를 조회한다. / 조회 하고자하는 커피가 검증된 커피인지 확인
-        Coffee findCoffee = findVerifiedCoffee(Coffee.getCoffeeId());
+        Coffee findCoffee = findVerifiedCoffee(coffee.getCoffeeId());
 
         Optional.ofNullable(coffee.getKorName())
                 // .ifPresent(); 만약 ()괋호 안을 가지고 있다면 true

@@ -28,7 +28,7 @@ public class Member {
     @Column(length = 13, nullable = false, unique = true)
     private String phone;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
@@ -56,7 +56,7 @@ public class Member {
         orders.add(order);
     }
 
-    private enum MemberStatus{
+    public enum MemberStatus{
         MEMBER_ACTIVE("활동중"),
         MEMBER_SLEEP("휴면 상태"),
         MEMBER_QUIT("탈퇴 상태");

@@ -1,13 +1,12 @@
 package SelfProject.kangCoffee.coffee.controller;
 
+import SelfProject.kangCoffee.coffee.dto.CoffeePatchDto;
+import SelfProject.kangCoffee.coffee.dto.CoffeePostDto;
 import SelfProject.kangCoffee.coffee.entity.Coffee;
-import com.codestates.coffee.dto.CoffeePatchDto;
-import com.codestates.coffee.dto.CoffeePostDto;
-import com.codestates.coffee.entity.Coffee;
-import com.codestates.coffee.mapper.CoffeeMapper;
-import com.codestates.coffee.service.CoffeeService;
-import com.codestates.response.MultiResponseDto;
-import com.codestates.response.SingleResponseDto;
+import SelfProject.kangCoffee.coffee.mapper.CoffeeMapper;
+import SelfProject.kangCoffee.coffee.service.CoffeeService;
+import SelfProject.kangCoffee.response.MultiResponseDto;
+import SelfProject.kangCoffee.response.SingleResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

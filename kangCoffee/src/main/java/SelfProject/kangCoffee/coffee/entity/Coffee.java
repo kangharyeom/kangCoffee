@@ -41,19 +41,6 @@ public class Coffee {
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-    @OneToMany (mappedBy = "coffee")
-    private List<OrderCoffee> orderCoffees = new ArrayList<>();
-
-    public void addOrderCoffee(OrderCoffee orderedCoffee) {
-        orderCoffees.add(orderedCoffee);
-    }
-
-    public Coffee(String korName, String engName, int price, String coffeeCode) {
-        this.korName = korName;
-        this.engName = engName;
-        this.price = price;
-        this.coffeeCode = coffeeCode;
-    }
 
     // 커피 상태 추가
     public enum CoffeeStatus {

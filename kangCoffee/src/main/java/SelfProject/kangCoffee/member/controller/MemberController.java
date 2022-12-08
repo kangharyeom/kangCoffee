@@ -1,16 +1,13 @@
 package SelfProject.kangCoffee.member.controller;
 
+
 import SelfProject.kangCoffee.member.dto.MemberPatchDto;
 import SelfProject.kangCoffee.member.dto.MemberPostDto;
 import SelfProject.kangCoffee.member.entity.Member;
+import SelfProject.kangCoffee.member.mapper.MemberMapper;
 import SelfProject.kangCoffee.member.service.MemberService;
-import com.codestates.member.dto.MemberPatchDto;
-import com.codestates.member.dto.MemberPostDto;
-import com.codestates.member.entity.Member;
-import com.codestates.member.mapper.MemberMapper;
-import com.codestates.member.service.MemberService;
-import com.codestates.response.MultiResponseDto;
-import com.codestates.response.SingleResponseDto;
+import SelfProject.kangCoffee.response.MultiResponseDto;
+import SelfProject.kangCoffee.response.SingleResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
-
 
 /**
  * - DI 적용
